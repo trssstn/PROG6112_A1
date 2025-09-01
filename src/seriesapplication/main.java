@@ -3,7 +3,17 @@ package seriesapplication;
 import java.util.*;
 
 public class main {
-
+    
+    //Arraylist to store multiple series
+    private ArrayList<series> seriesList;
+    
+    //Constructor for the application
+    public main() {
+        seriesList = new ArrayList<>();
+    }
+    
+    //Method for adding a series
+    
     
     public static void main(String[] args) {
         
@@ -18,6 +28,7 @@ public class main {
         
         //If a non-number value is entered, the application closes
         if (!input.hasNextInt()) {
+            System.out.println("Shutting down...");
             System.exit(0);
         }
         
@@ -25,6 +36,7 @@ public class main {
         
         //If a number value other than 1 is entered, the application closes
         if (choice != 1) {
+            System.out.println("Shutting down...");
             System.exit(0);
         }
         
@@ -43,7 +55,7 @@ public class main {
             
             //Input validation to make sure the entered value is an integer
             while (!input.hasNextInt()) {
-                System.out.print("Oops! That's not a number, try again:");
+                System.out.print("Oops! That's not a number, try again:\n");
                 input.next(); //clears bad input
             }
             
@@ -69,7 +81,7 @@ public class main {
                     System.out.println("Shutting down...");
                     break;
                 default:
-                    System.out.println("Sorry, that's not an option. Try again:");
+                    System.out.println("Sorry, that's not an option. Try again:\n");
             }
             
         } while (choice != 6); //main application do-while loop only stops when user enters 6 to exit application
@@ -77,14 +89,9 @@ public class main {
     }
     
     public static void clearConsole() {
-        //Code obtained from StackOverflow to clear the console
-        
-        //\033[H : Moves cursor to home position (top-left corner)
-        //\033[2J : Clears the entire screen
-        System.out.print("\033[H\033[2J");
-        
-        //Ensures output is immediately written to console
-        System.out.flush();
+        //Code to give the impression of clearing the console
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
+    
     
 }
