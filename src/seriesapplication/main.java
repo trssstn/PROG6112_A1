@@ -113,12 +113,12 @@ public class main {
             System.out.println("(5) Done updating");
             System.out.println("Select an option:");
             
-            int updateChoice = 0;
+            String updateChoiceStr = input.nextLine().trim();
+            int updateChoice;
+            
             try {
-                updateChoice = input.nextInt();
-                input.nextLine(); 
-            } catch (Exception e) {
-                input.nextLine(); //Clear invalid input
+                updateChoice = Integer.parseInt(updateChoiceStr);
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Please try again.");
                 continue;
             }
@@ -216,33 +216,31 @@ public class main {
     public static void main(String[] args) {
         
 //----------------------------------MAIN CONSOLE RUNNING CODE-----------------------------------------------
-        
-        int choice;
+        //seriesModel seriesModel = new seriesModel;
         Scanner input = new Scanner(System.in);
         
         System.out.println("LATEST SERIES - 2025");
         System.out.println("***************************************************");
         System.out.println("Enter (1) to launch menu or any other key to exit");
         
-        //If a non-number value is entered, the application closes
-        if (!input.hasNextInt()) {
-            System.out.println("Shutting down...");
-            System.exit(0);
-        }
+        String mainscreenStr = input.nextLine().trim();
         
-        choice = input.nextInt();
+        int mainscreen = 0;
+        
+        try {
+            mainscreen = Integer.parseInt(mainscreenStr);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid option!");
+        }
         
         //If a number value other than 1 is entered, the application closes
-        if (choice != 1) {
+        if (mainscreen != 1) {
             System.out.println("Shutting down...");
             System.exit(0);
         }
         
-        //The console is cleared to prepare for the main menu to be loaded
-        clearConsole();
-        
         //Main menu loop
-        do {
+        while (true) {
             System.out.println("Please select one of the following menu items:");
             System.out.println("(1) Capture a new series");
             System.out.println("(2) Search for a series");
@@ -251,28 +249,52 @@ public class main {
             System.out.println("(5) Print series report - 2025");
             System.out.println("(6) Exit application");
             
-            //Input validation to make sure the entered value is an integer
-            while (!input.hasNextInt()) {
-                System.out.print("Oops! That's not a number, try again:\n");
-                input.next(); //clears bad input
+            //Making use of nextline() for all inputs and parsing to int
+            String choiceStr = input.nextLine().trim();
+            
+            if (choiceStr.isEmpty()) {
+                continue;
             }
             
-            choice = input.nextInt();
+            int choice;
+            
+            //Input validation to make sure the entered value is an integer
+            try {
+                choice = Integer.parseInt(choiceStr);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number: ");
+                continue;
+            }
             
             switch (choice) {
                 case 1:
                     //Menu generation for adding a new series
                     System.out.println("Enter the series ID: ");
-                    String id = input.nextLine();
+                    String id = input.nextLine().trim();
+                    
+                    if (id.isEmpty()) {
+                        System.out.println("Series ID cannot be empty!");
+                        break;
+                    }
                     
                     System.out.println("Enter the series name: ");
-                    String name = input.nextLine();
+                    String name = input.nextLine().trim();
+                    
+                    if (name.isEmpty()) {
+                        System.out.println("Series name cannot be empty!");
+                        break;
+                    }
                     
                     //Only allowing validated age restriction to be saved to memory
                     String age = getValidAge(input);
                     
                     System.out.println("Enter the number of episodes for " + name + ": ");
-                    String episodes = input.nextLine();
+                    String episodes = input.nextLine().trim();
+                    
+                    if (episodes.isEmpty()) {
+                        System.out.println("Number of episodes cannot be empty!");
+                        break;
+                    }
                     
                     addSeries(id, name, age, episodes);
                     System.out.println("Series has been succesfully added!");
@@ -321,20 +343,16 @@ public class main {
                     
                 case 6:
                     System.out.println("Shutting down...");
+                    input.close();
+                    System.exit(0);
                     break;
                     
                 default:
                     System.out.println("Sorry, that's not an option. Try again:\n");
-            }
-            
-        } while (choice != 6); //main application do-while loop only stops when user enters 6 to exit application
-        
+            }   
+        }   
     }
     
-    public static void clearConsole() {
-        //Code to give the impression of clearing the console
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    }
     
     
 }
