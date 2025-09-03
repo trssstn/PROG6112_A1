@@ -196,16 +196,20 @@ public class main {
     }
     
     //Method to display all series
-    public void seriesReport(){
-        
+    public static void seriesReport(){
         if (seriesList.isEmpty()) {
             System.out.println("No series have been added!");
             return;
         }
         
-        System.out.println("Placeholder code");
+        int i = 1;
+        
         for (seriesModel series : seriesList) {
+            System.out.println("Series " + String.valueOf(i));
+            System.out.println("---------------------------------------------------------");
             System.out.println(series);
+            System.out.println("---------------------------------------------------------");
+            i++;
         }
     }
     
@@ -299,14 +303,26 @@ public class main {
                     break;
                     
                 case 4:
-                    //enter logic here
+                    //Menu generation for series deletion
+                    System.out.println("Enter the series ID to delete: ");
+                    String deleteID = input.nextLine().trim();
+                    
+                    if (deleteID.isEmpty()) {
+                        System.out.println("Series ID cannot be empty!");
+                    } else {
+                        deleteSeries(deleteID, input);
+                    }
                     break;
+                    
                 case 5:
-                    //enter logic here
+                    //Series report generation
+                    seriesReport();
                     break;
+                    
                 case 6:
                     System.out.println("Shutting down...");
                     break;
+                    
                 default:
                     System.out.println("Sorry, that's not an option. Try again:\n");
             }
