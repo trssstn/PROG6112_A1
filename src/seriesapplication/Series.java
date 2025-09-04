@@ -289,5 +289,76 @@ public void CaptureSeries() {
             return 0; //Invalid choice
         }
     }
+    
+//----------------------------------TESTING METHODS------------------------------------------
+    
+    //Method to add a series directly for testing
+    public boolean addSeries(String id, String name, String age, String episodes) {
+        SeriesModel newSeries = new SeriesModel(id, name, age, episodes);
+        seriesList.add(newSeries);
+        return true;
+    }
+    
+    //Method to find a series by its ID (returns SeriesModel or null)
+    public SeriesModel findSeriesByID(String seriesID) {
+        for (SeriesModel series : seriesList) {
+            if (series.SeriesID.equalsIgnoreCase(seriesID)) {
+                return series;
+            }
+        }
+        return null;
+    }
+    
+    //Method to update a series (returns true if successful)
+    public boolean updateSeriesByID(String seriesID, String newName, String newAge, String newEpisodes) {
+        SeriesModel series = findSeriesByID(seriesID);
+        if (series != null) {
+            if (newName != null) series.SeriesName = newName;
+            if (newAge != null) series.SeriesAge = newAge;
+            if (newEpisodes != null) series.SeriesNumberOfEpisodes = newEpisodes;
+            return true;
+        }
+        return false;
+    }
+    
+    //Method to delete a series (returns true if successfull)
+    public boolean deleteSeriesByID(String seriesID) {
+        SeriesModel series = findSeriesByID(seriesID);
+        if (series != null) {
+            seriesList.remove(series);
+            return true;
+        }
+        return false;
+    }
+    
+    //Method to validate age restriction (returns true if valid)
+    public boolean isValidAgeRestriction(String age) {
+        if (age == null || age.trim().isEmpty()) {
+            return false;
+        }
+        
+        //Check if input only contains numbers
+        if (!age.matches("\\d+")) {
+            return false;
+        }
+        
+        try {
+            int ageValue = Integer.parseInt(age);
+            return ageValue >= 2 && ageValue <= 18;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    //Get the series list (for testing)
+    public ArrayList<SeriesModel> getSeriesList() {
+        return seriesList;
+    }
+    
+    //Clear all series (for testing)
+    public void clearAllSeries() {
+        seriesList.clear();
+    }
+    
 }   
 
